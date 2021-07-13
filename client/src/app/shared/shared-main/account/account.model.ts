@@ -4,8 +4,12 @@ import { Actor } from './actor.model'
 export class Account extends Actor implements ServerAccount {
   displayName: string
   description: string
+
+  updatedAt: Date | string
+
   nameWithHost: string
   nameWithHostForced: string
+
   mutedByUser: boolean
   mutedByInstance: boolean
   mutedServerByUser: boolean
@@ -14,7 +18,7 @@ export class Account extends Actor implements ServerAccount {
   userId?: number
 
   static GET_ACTOR_AVATAR_URL (actor: { avatar?: { url?: string, path: string } }) {
-    return Actor.GET_ACTOR_AVATAR_URL(actor) || this.GET_DEFAULT_AVATAR_URL()
+    return Actor.GET_ACTOR_AVATAR_URL(actor)
   }
 
   static GET_DEFAULT_AVATAR_URL () {
@@ -24,13 +28,13 @@ export class Account extends Actor implements ServerAccount {
   constructor (hash: ServerAccount) {
     super(hash)
 
-    this.updateComputedAttributes()
-
     this.displayName = hash.displayName
     this.description = hash.description
     this.userId = hash.userId
     this.nameWithHost = Actor.CREATE_BY_STRING(this.name, this.host)
     this.nameWithHostForced = Actor.CREATE_BY_STRING(this.name, this.host, true)
+
+    if (hash.updatedAt) this.updatedAt = new Date(hash.updatedAt.toString())
 
     this.mutedByUser = false
     this.mutedByInstance = false
@@ -40,16 +44,9 @@ export class Account extends Actor implements ServerAccount {
 
   updateAvatar (newAvatar: ActorImage) {
     this.avatar = newAvatar
-
-    this.updateComputedAttributes()
   }
 
   resetAvatar () {
     this.avatar = null
-    this.avatarUrl = Account.GET_DEFAULT_AVATAR_URL()
-  }
-
-  private updateComputedAttributes () {
-    this.avatarUrl = Account.GET_ACTOR_AVATAR_URL(this)
   }
 }

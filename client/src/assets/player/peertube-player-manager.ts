@@ -4,6 +4,8 @@ import 'videojs-contextmenu-pt'
 import 'videojs-contrib-quality-levels'
 import './upnext/end-card'
 import './upnext/upnext-plugin'
+import './stats/stats-card'
+import './stats/stats-plugin'
 import './bezels/bezels-plugin'
 import './peertube-plugin'
 import './videojs-components/next-previous-video-button'
@@ -20,8 +22,10 @@ import './videojs-components/settings-panel-child'
 import './videojs-components/theater-button'
 import './playlist/playlist-plugin'
 import videojs from 'video.js'
+import { PluginsManager } from '@root-helpers/plugins-manager'
 import { isDefaultLocale } from '@shared/core-utils/i18n'
 import { VideoFile } from '@shared/models'
+import { copyToClipboard } from '../../root-helpers/utils'
 import { RedundancyUrlManager } from './p2p-media-loader/redundancy-url-manager'
 import { segmentUrlBuilderFactory } from './p2p-media-loader/segment-url-builder'
 import { segmentValidatorFactory } from './p2p-media-loader/segment-validator'
@@ -35,8 +39,7 @@ import {
   VideoJSPluginOptions
 } from './peertube-videojs-typings'
 import { TranslationsManager } from './translations-manager'
-import { buildVideoOrPlaylistEmbed, buildVideoLink, getRtcConfig, isSafari, isIOS } from './utils'
-import { copyToClipboard } from '../../root-helpers/utils'
+import { buildVideoLink, buildVideoOrPlaylistEmbed, getRtcConfig, isIOS, isSafari } from './utils'
 
 // Change 'Playback Rate' to 'Speed' (smaller for our settings menu)
 (videojs.getComponent('PlaybackRateMenuButton') as any).prototype.controlText_ = 'Speed'
@@ -114,21 +117,26 @@ export interface CommonOptions extends CustomizationOptions {
 }
 
 export type PeertubePlayerManagerOptions = {
-  common: CommonOptions,
-  webtorrent: WebtorrentOptions,
+  common: CommonOptions
+  webtorrent: WebtorrentOptions
   p2pMediaLoader?: P2PMediaLoaderOptions
+
+  pluginsManager: PluginsManager
 }
 
 export class PeertubePlayerManager {
   private static playerElementClassName: string
   private static onPlayerChange: (player: videojs.Player) => void
   private static alreadyPlayed = false
+  private static pluginsManager: PluginsManager
 
   static initState () {
     PeertubePlayerManager.alreadyPlayed = false
   }
 
   static async initialize (mode: PlayerMode, options: PeertubePlayerManagerOptions, onPlayerChange: (player: videojs.Player) => void) {
+    this.pluginsManager = options.pluginsManager
+
     let p2pMediaLoader: any
 
     this.onPlayerChange = onPlayerChange
@@ -142,7 +150,7 @@ export class PeertubePlayerManager {
       ])
     }
 
-    const videojsOptions = this.getVideojsOptions(mode, options, p2pMediaLoader)
+    const videojsOptions = await this.getVideojsOptions(mode, options, p2pMediaLoader)
 
     await TranslationsManager.loadLocaleInVideoJS(options.common.serverUrl, options.common.language, videojs)
 
@@ -170,6 +178,11 @@ export class PeertubePlayerManager {
         self.addContextMenu(mode, player, options.common.embedUrl, options.common.embedTitle)
 
         player.bezels()
+        player.stats({
+          videoUUID: options.common.videoUUID,
+          videoIsLive: options.common.isLive,
+          mode
+        })
 
         return res(player)
       })
@@ -199,7 +212,7 @@ export class PeertubePlayerManager {
     await import('./webtorrent/webtorrent-plugin')
 
     const mode = 'webtorrent'
-    const videojsOptions = this.getVideojsOptions(mode, options)
+    const videojsOptions = await this.getVideojsOptions(mode, options)
 
     const self = this
     videojs(newVideoElement, videojsOptions, function (this: videojs.Player) {
@@ -211,16 +224,16 @@ export class PeertubePlayerManager {
     })
   }
 
-  private static getVideojsOptions (
+  private static async getVideojsOptions (
     mode: PlayerMode,
     options: PeertubePlayerManagerOptions,
     p2pMediaLoaderModule?: any
-  ): videojs.PlayerOptions {
+  ): Promise<videojs.PlayerOptions> {
     const commonOptions = options.common
     const isHLS = mode === 'p2p-media-loader'
 
     let autoplay = this.getAutoPlayValue(commonOptions.autoplay)
-    let html5 = {
+    const html5 = {
       preloadTextTracks: false
     }
 
@@ -299,7 +312,7 @@ export class PeertubePlayerManager {
       Object.assign(videojsOptions, { language: commonOptions.language })
     }
 
-    return videojsOptions
+    return this.pluginsManager.runHook('filter:internal.player.videojs.options.result', videojsOptions)
   }
 
   private static addP2PMediaLoaderOptions (
@@ -375,6 +388,7 @@ export class PeertubePlayerManager {
   private static addWebTorrentOptions (plugins: VideoJSPluginOptions, options: PeertubePlayerManagerOptions) {
     const commonOptions = options.common
     const webtorrentOptions = options.webtorrent
+    const p2pMediaLoaderOptions = options.p2pMediaLoader
 
     const autoplay = this.getAutoPlayValue(commonOptions.autoplay) === 'play'
       ? true
@@ -384,7 +398,10 @@ export class PeertubePlayerManager {
       autoplay,
       videoDuration: commonOptions.videoDuration,
       playerElement: commonOptions.playerElement,
-      videoFiles: webtorrentOptions.videoFiles,
+      videoFiles: webtorrentOptions.videoFiles.length !== 0
+        ? webtorrentOptions.videoFiles
+        // The WebTorrent plugin won't be able to play these files, but it will fallback to HTTP mode
+        : p2pMediaLoaderOptions?.videoFiles || [],
       startTime: commonOptions.startTime
     }
 
@@ -537,6 +554,14 @@ export class PeertubePlayerManager {
           }
         })
       }
+
+      items.push({
+        icon: 'info',
+        label: player.localize('Stats for nerds'),
+        listener: () => {
+          player.stats().show()
+        }
+      })
 
       return items.map(i => ({
         ...i,

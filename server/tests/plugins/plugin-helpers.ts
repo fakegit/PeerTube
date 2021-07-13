@@ -133,6 +133,7 @@ describe('Test plugin helpers', function () {
       })
 
       expect(res.body.username).to.equal('root')
+      expect(res.body.displayName).to.equal('root')
       expect(res.body.isAdmin).to.be.true
       expect(res.body.isModerator).to.be.false
       expect(res.body.isUser).to.be.false
@@ -143,7 +144,7 @@ describe('Test plugin helpers', function () {
     let videoUUIDServer1: string
 
     before(async function () {
-      this.timeout(30000)
+      this.timeout(60000)
 
       {
         const res = await uploadVideoAndGetId({ server: servers[0], videoName: 'video server 1' })

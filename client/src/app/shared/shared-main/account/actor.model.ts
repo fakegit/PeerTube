@@ -12,10 +12,8 @@ export abstract class Actor implements ServerActor {
   followersCount: number
 
   createdAt: Date | string
-  updatedAt: Date | string
 
   avatar: ActorImage
-  avatarUrl: string
 
   isLocal: boolean
 
@@ -56,7 +54,6 @@ export abstract class Actor implements ServerActor {
     this.followersCount = hash.followersCount
 
     if (hash.createdAt) this.createdAt = new Date(hash.createdAt.toString())
-    if (hash.updatedAt) this.updatedAt = new Date(hash.updatedAt.toString())
 
     this.avatar = hash.avatar
     this.isLocal = Actor.IS_LOCAL(this.host)

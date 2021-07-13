@@ -3,7 +3,9 @@ import { SelectButtonModule } from 'primeng/selectbutton'
 import { TableModule } from 'primeng/table'
 import { NgModule } from '@angular/core'
 import { SharedAbuseListModule } from '@app/shared/shared-abuse-list'
-import { SharedActorImageModule } from '@app/shared/shared-actor-image'
+import { SharedActorImageEditModule } from '@app/shared/shared-actor-image-edit'
+import { SharedActorImageModule } from '@app/shared/shared-actor-image/shared-actor-image.module'
+import { SharedCustomMarkupModule } from '@app/shared/shared-custom-markup'
 import { SharedFormModule } from '@app/shared/shared-forms'
 import { SharedGlobalIconModule } from '@app/shared/shared-icons'
 import { SharedMainModule } from '@app/shared/shared-main'
@@ -17,6 +19,7 @@ import {
   EditBasicConfigurationComponent,
   EditConfigurationService,
   EditCustomConfigComponent,
+  EditHomepageComponent,
   EditInstanceInformationComponent,
   EditLiveConfigurationComponent,
   EditVODTranscodingComponent
@@ -39,7 +42,6 @@ import { JobService, LogsComponent, LogsService, SystemComponent } from './syste
 import { DebugComponent, DebugService } from './system/debug'
 import { JobsComponent } from './system/jobs/jobs.component'
 import { UserCreateComponent, UserListComponent, UserPasswordComponent, UsersComponent, UserUpdateComponent } from './users'
-import { SharedAccountAvatarModule } from '../shared/shared-account-avatar/shared-account-avatar.module'
 
 @NgModule({
   imports: [
@@ -51,8 +53,9 @@ import { SharedAccountAvatarModule } from '../shared/shared-account-avatar/share
     SharedGlobalIconModule,
     SharedAbuseListModule,
     SharedVideoCommentModule,
-    SharedAccountAvatarModule,
     SharedActorImageModule,
+    SharedActorImageEditModule,
+    SharedCustomMarkupModule,
 
     TableModule,
     SelectButtonModule,
@@ -100,7 +103,8 @@ import { SharedAccountAvatarModule } from '../shared/shared-account-avatar/share
     EditVODTranscodingComponent,
     EditLiveConfigurationComponent,
     EditAdvancedConfigurationComponent,
-    EditInstanceInformationComponent
+    EditInstanceInformationComponent,
+    EditHomepageComponent
   ],
 
   exports: [

@@ -3,43 +3,44 @@
  * Chocobozzz
  * Rigel Kent
  * Filip Bengtsson
- * kimsible
  * josé m
+ * kimsible
  * Simon Brosdetzko
  * Александр
- * Clemens Schielicke
  * Berto Te
  * Jeff Huang
+ * Clemens Schielicke
  * kontrollanten
- * Phongpanot
  * Laurent Ettouati
  * Racida S
- * Kim
+ * Phongpanot
  * Marcin Mikołajczak
+ * Kim
  * Tirifto
- * Felix Ableitner
  * Vodoyo Kamal
+ * Felix Ableitner
  * Gérald Niel
- * Zet
+ * Duy
  * GunChleoc
- * x
+ * Slimane Selyan AMIRI
+ * Zet
  * Frank Sträter
+ * x
  * Julien Maulny
+ * Kimsible
  * Mark Van den Borre
+ * John Livingston
  * Jorropo
  * Josh Morel
  * BO41
- * Slimane Selyan AMIRI
+ * Balázs Meskó
+ * Eivind Ødegård
  * Francesc
  * mando laress
- * Balázs Meskó
- * Duy
- * John Livingston
  * Quentin PAGÈS
  * Besnik Bleta
  * Ihor Hordiichuk
  * ButterflyOfFire
- * Kimsible
  * Xabi
  * buoyantair
  * Balázs Úr
@@ -53,7 +54,6 @@
  * Thomas Citharel
  * Agron Selimaj
  * Benjamin Bouvier
- * Eivind Ødegård
  * Joe Bill
  * Kemal Oktay Aktoğan
  * Luc Didry
@@ -66,6 +66,7 @@
  * David Libeau
  * Ewald Arnold
  * Florent F
+ * Florian CUNY
  * Nassim Bounouas
  * NorbiPeti
  * Rafael Fontenelle
@@ -81,10 +82,10 @@
  * David Soh
  * Dimitri Gilbert
  * Florent Poinsaut
- * Florian CUNY
  * Frank Chang
  * Green-Star
  * Micah Elizabeth Scott
+ * Poslovitch
  * SVNET Libre
  * Thomas Kuntz
  * William Lahti
@@ -94,6 +95,7 @@
  * test2a
  * 路过是好事
  * Ajeje Brazorf
+ * Andrey
  * Angristan
  * Ch
  * Chris Sakura 佐倉くりす on Youtube
@@ -115,7 +117,6 @@
  * Ahsan Haris Ahmed
  * Alberto Teira
  * Aliaksandr Hrankin
- * Andrey
  * Andréas Livet
  * Andrés Maldonado
  * Arco
@@ -124,15 +125,18 @@
  * Daniele Garau
  * Dep Pranata
  * Ehsan Gholami
+ * Eric Guichaoua
  * Girish Ramakrishnan
  * Hakim Oubouali
  * Hans Meiser
+ * Hồ Nhất Duy
  * Iñigo A
  * Jefferson Hernandez
  * Joan Montané
  * Kiro
  * LecygneNoir
  * Leopere
+ * Loukas Stamellos
  * Lukas Winkler
  * Manuel Viens
  * Manuela Silva
@@ -164,7 +168,6 @@
  * Diazepan Medina
  * Dirk Kelly
  * EndoGai
- * Eric Guichaoua
  * Florent Fayolle
  * Florian
  * Frank de Lange
@@ -187,6 +190,7 @@
  * Quentin
  * Ronan
  * SerCom_KC
+ * Stakovicz
  * Thai Localization
  * Valvin
  * YiDai
@@ -250,6 +254,7 @@
  * Fabio Agreles Bezerra
  * Fernandez, ReK2
  * Florent
+ * Gabriel Scherer
  * Glandos
  * Guillaume Pérution-Kihli
  * Gérald CHATAGNON
@@ -265,6 +270,7 @@
  * Jacob
  * Jacques Foucry
  * Jagannath Bhat
+ * Jan Prunk
  * Janey Muñoz
  * Jarosław Maciejewski
  * Jeena
@@ -315,6 +321,7 @@
  * PhieF
  * Philip Durbin
  * Philipp Fischbeck
+ * Philo van Kemenade
  * Pierre-Jean
  * Predatorix Phoenix
  * Quentin Dupont
@@ -361,6 +368,7 @@
  * bikepunk
  * bsky
  * ctlaltdefeat
+ * decentral1se
  * dingycle
  * eduard pintilie
  * gillux
@@ -378,6 +386,7 @@
  * norrist
  * osauzet
  * philippe lhardy
+ * plr20
  * potedeo
  * sanchis
  * spf
@@ -523,6 +532,7 @@
  * `video-language` by Rigel Kent (CC-BY)
  * `peertube-x` by Solen DP (CC-BY)
  * `flame` by Freepik (Flaticon License)
+ * `local` by Larea (CC-BY)
 
 
 # Contributors to our 2020 crowdfunding :heart:

@@ -1,7 +1,7 @@
-@import 'mixins';
+@use '_mixins' as *;
 
 my-feed {
-  margin-left: 5px;
+  @include margin-left(5px);
   display: inline-block;
   width: 15px;
 }
@@ -9,23 +9,6 @@ my-feed {
 my-global-icon {
   width: 24px;
   height: 24px;
-}
-
-.input-group {
-  @include peertube-input-group(300px);
-
-  .dropdown-toggle::after {
-    margin-left: 0;
-  }
-}
-
-.caption {
-  justify-content: flex-end;
-
-  input {
-    @include peertube-input-text(250px);
-    flex-grow: 1;
-  }
 }
 
 .video {
@@ -49,7 +32,8 @@ my-global-icon {
       max-height: 22px;
     }
 
-    div, p {
+    div,
+    p {
       @include ellipsis;
     }
 
